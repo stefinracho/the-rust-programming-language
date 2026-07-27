@@ -1,0 +1,6 @@
+[package]
+name = "ch05-using-structs-to-structure-related-data"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
