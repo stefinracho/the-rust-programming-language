@@ -36,7 +36,7 @@ name = "ch06-enums-and-pattern-matching"
 version = "0.1.0"
 
 [[package]]
-name = "ch07-packages-crates-and-modules"
+name = "ch08-common-collections"
 version = "0.1.0"
 
 [[package]]

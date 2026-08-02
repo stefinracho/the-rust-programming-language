@@ -1,6 +1,9 @@
 [workspace]
 members = [
     "ch*",
-    "ch*/*",
+    "ch07-packages-crates-and-modules/*",
+]
+exclude = [
+    "ch07-packages-crates-and-modules",
 ]
 resolver = "3"
