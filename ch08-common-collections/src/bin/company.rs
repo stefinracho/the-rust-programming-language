@@ -1,5 +1,5 @@
 use std::{
-    collections::{HashMap, hash_map::Entry},
+    collections::HashMap,
     io::{self, Write},
 };
 
@@ -56,17 +56,69 @@ fn main() {
                     .expect("Failed to read line.");
                 let department = department.trim();
 
-                match departments.entry(department.to_string()) {
-                    Entry::Occupied(mut entry) => {
-                        entry.get_mut().push(person.to_string());
+                match departments.get_mut(department) {
+                    Some(people) => {
                         println!("Added {person} to {department}\n");
+                        people.push(person);
                         break;
                     }
-                    Entry::Vacant(_) => println!("Department does not exist. Try again."),
+                    None => println!("Department does not exist. Try again."),
                 }
             }
         } else if cmd.eq_ignore_ascii_case("list") {
-            println!("{:?}", departments)
+            'list: loop {
+                print!("Command (department|company): ");
+                io::stdout().flush().expect("stdout should flush");
+
+                let mut cmd = String::new();
+                io::stdin()
+                    .read_line(&mut cmd)
+                    .expect("Failed to read line.");
+                let cmd = cmd.trim();
+
+                if cmd.eq_ignore_ascii_case("department") {
+                    // List department
+                    loop {
+                        print!("Name of department you want list: ");
+                        io::stdout().flush().expect("stdout should flush");
+                        let mut department = String::new();
+                        io::stdin()
+                            .read_line(&mut department)
+                            .expect("Failed to read line.");
+                        let department = department.trim();
+
+                        match departments.get(department) {
+                            Some(people) => {
+                                let mut sorted_people: Vec<_> = people.iter().collect();
+                                sorted_people.sort();
+                                for person in sorted_people {
+                                    println!("{person}");
+                                }
+                                println!();
+                                break 'list;
+                            }
+                            None => println!("Department does not exist. Try again."),
+                        }
+                    }
+                } else if cmd.eq_ignore_ascii_case("company") {
+                    // List company
+                    let mut sorted_deps: Vec<_> = departments.iter().collect();
+                    sorted_deps.sort_by_key(|&(k, _)| k);
+                    for (department, people) in sorted_deps {
+                        println!("{}", department.to_ascii_uppercase());
+                        let mut sorted_people: Vec<_> = people.iter().collect();
+                        sorted_people.sort();
+                        for person in sorted_people {
+                            println!("{person}");
+                        }
+                        println!();
+                    }
+                    break;
+                } else {
+                    println!("Invalid Command");
+                    println!("Acceptable commands are `department` or `company`");
+                }
+            }
         } else if cmd.eq_ignore_ascii_case("quit") {
             break;
         } else {
