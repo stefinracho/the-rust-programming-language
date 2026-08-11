@@ -2,8 +2,10 @@
 members = [
     "ch*",
     "ch07-packages-crates-and-modules/*",
+    "ch11-writing-automated-tests/*",
 ]
 exclude = [
     "ch07-packages-crates-and-modules",
+    "ch11-writing-automated-tests",
 ]
 resolver = "3"
