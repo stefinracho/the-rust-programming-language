@@ -2,7 +2,7 @@
 members = [
     "ch*",
     "ch07-packages-crates-and-modules/*",
-    "ch11-writing-automated-tests/*",
+    "ch11-writing-automated-tests/*", "minigrep",
 ]
 exclude = [
     "ch07-packages-crates-and-modules",
